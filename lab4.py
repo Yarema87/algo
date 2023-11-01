@@ -1,23 +1,24 @@
 import copy
-
+from collections import deque
 
 def flood_fill(image, start, new_color):
     rows, cols = len(image), len(image[0])
     original_color = image[start[0]][start[1]]
 
-    stack = [start]
-    while stack:
-        r, c = stack.pop()
+    queue = deque([start])
+    while queue:
+        r, c = queue.popleft()
         if image[r][c] == original_color:
             image[r][c] = new_color
             if r > 0 and image[r - 1][c] == original_color:
-                stack.append((r - 1, c))
+                queue.append((r - 1, c))
             if r < rows - 1 and image[r + 1][c] == original_color:
-                stack.append((r + 1, c))
+                queue.append((r + 1, c))
             if c > 0 and image[r][c - 1] == original_color:
-                stack.append((r, c - 1))
+                queue.append((r, c - 1))
             if c < cols - 1 and image[r][c + 1] == original_color:
-                stack.append((r, c + 1))
+                queue.append((r, c + 1))
+
 
 
 original_image = [
